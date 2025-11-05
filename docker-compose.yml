@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: java_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME:-byteforge_db}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-postgres}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-password}
+      SPRING_DATASOURCE_HIKARI_MAXIMUM-POOL-SIZE: 5
+      FILE_STORAGE_PATH: /app/data/uploads
+      JWT_SECRET: ${JWT_SECRET}
+      SANDBOX_URL: sandbox
+    ports:
+      - '8000:8000'
+    depends_on:
+      postgres:
+        condition: service_healthy
+      sandbox:
+        condition: service_started
+    volumes:
+      - uploads_data:/app/data/uploads
+    networks:
+      - spring-network
+    restart: 'unless-stopped'
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vue_frontend
+    ports:
+      - '5173:5173'
+    depends_on:
+      - api
+    networks:
+      - spring-network
+    restart: 'unless-stopped'
+
+  postgres:
+    image: postgres:15
+    container_name: spring-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-byteforge_db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - spring-network
+    restart: 'unless-stopped'
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-byteforge_db}',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sandbox:
+    build: ./LinuxSandbox
+    container_name: cpp_sandbox
+    ports:
+      - '8884:8884'
+    networks:
+      - spring-network
+    restart: 'unless-stopped'
+
+volumes:
+  postgres_data:
+  uploads_data:
+
+networks:
+  spring-network:
+    driver: bridge

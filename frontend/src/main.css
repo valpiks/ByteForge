@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 15%;
+
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 262 90% 70%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 240 10% 15%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 240 5% 45%;
+
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262 83% 58%;
+
+    --radius: 0.75rem;
+
+    --editor-bg: 0 0% 98%;
+    --editor-sidebar: 0 0% 95%;
+    --editor-border: 220 13% 85%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%), hsl(220 90% 56%));
+    --gradient-hero: linear-gradient(180deg, hsl(262 90% 96%), hsl(220 90% 98%));
+
+    --shadow-elegant: 0 10px 40px -10px hsl(262 83% 58% / 0.3);
+    --shadow-glow: 0 0 60px hsl(262 90% 70% / 0.4);
+
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 240 21% 8%;
+    --foreground: 0 0% 95%;
+
+    --card: 240 17% 12%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 240 17% 12%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 262 90% 70%;
+
+    --secondary: 240 9% 18%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 240 9% 18%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 9% 22%;
+    --input: 240 9% 22%;
+    --ring: 262 83% 58%;
+
+    /* Темные цвета для редактора в темной теме */
+    --editor-bg: 240 21% 15%;
+    --editor-sidebar: 240 17% 12%;
+    --editor-border: 240 9% 22%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(262 83% 58%), hsl(220 90% 56%));
+    --gradient-hero: linear-gradient(180deg, hsl(240 21% 8%), hsl(240 17% 12%));
+
+    --shadow-elegant: 0 10px 40px -10px hsl(262 83% 58% / 0.5);
+    --shadow-glow: 0 0 60px hsl(262 90% 70% / 0.5);
+  }
+
+  * {
+    @apply border-border;
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--secondary)) transparent;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  code,
+  pre {
+    @apply font-mono;
+  }
+
+  ::selection {
+    @apply bg-secondary/40 text-secondary-foreground/40;
+  }
+
+  ::-moz-selection {
+    @apply bg-secondary/40 text-secondary-foreground/40;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border-radius: 4px;
+    border: 2px solid hsl(var(--muted));
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.8);
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: hsl(var(--primary) / 0.6);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: hsl(var(--muted));
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+}
