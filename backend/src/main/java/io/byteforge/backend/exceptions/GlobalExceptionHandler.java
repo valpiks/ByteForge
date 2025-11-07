@@ -3,6 +3,7 @@ package io.byteforge.backend.exceptions;
 import io.byteforge.backend.model.dto.ErrorResponseDto;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
+import lombok.extern.slf4j.Slf4j;
 import io.jsonwebtoken.security.WeakKeyException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
@@ -150,7 +152,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponseDto> handleAllExceptions(Exception ex) {
-        System.out.println(ex);
+        log.error("Unhandled exception occurred", ex);
         ErrorResponseDto error = ErrorResponseDto.of(
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "INTERNAL_SERVER_ERROR",

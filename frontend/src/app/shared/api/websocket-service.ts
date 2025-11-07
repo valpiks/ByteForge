@@ -1,7 +1,7 @@
 import { ExecutionMessage } from '../types/websocket';
 
 class WebSocketService {
-  private socketURL: string = import.meta.env.VITE_SOCKET_URL || '/ws';
+  private socketURL: string = '/ws';
   private socket: WebSocket | null = null
   private isConnected: boolean = false
   private messageCallbacks: ((message: ExecutionMessage) => void)[] = []

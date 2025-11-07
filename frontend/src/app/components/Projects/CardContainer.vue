@@ -10,7 +10,7 @@
         <div class="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
           <Icon icon="tabler:folder-code" class="h-5 w-5 text-primary" />
         </div>
-        <div class="flex gap-1">
+        <div v-if="project.ownerId === userStore.user?.id" class="flex gap-1">
           <button
             @click.stop="openEditModal(project)"
             type="button"
@@ -79,6 +79,7 @@
 <script setup lang="ts">
 import { getUpdatedTimeAgo } from '@/app/shared/utils/Formatters'
 import { useProjectStore } from '@/stores/project'
+import { useUserStore } from '@/stores/user'
 import { Icon } from '@iconify/vue'
 import { ref } from 'vue'
 import type { Project } from '../types/Profile'
@@ -87,6 +88,7 @@ import ProjectForm from '../UI/forms/ProjectForm.vue'
 import SimpleModal from '../UI/modal/SimpleModal.vue'
 
 const projectStore = useProjectStore()
+const userStore = useUserStore()
 
 const isEditOpen = ref<boolean>(false)
 const isConfirmOpen = ref<boolean>(false)

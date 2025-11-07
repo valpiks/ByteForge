@@ -123,7 +123,7 @@ public class ProjectService {
         Project existingProject = projectRepository.findById(projectId)
                 .orElseThrow(() -> new BadRequestException("Project not found"));
 
-        if (!existingProject.getInviteToken().isEmpty()) {
+        if (existingProject.getInviteToken() != null && !existingProject.getInviteToken().isEmpty()) {
             return ResponseEntity.status(HttpServletResponse.SC_CREATED).body(ProjectDto.InviteToken.toDto(existingProject.getInviteToken()));
         }
 

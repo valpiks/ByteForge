@@ -33,26 +33,6 @@ public:
 	void execute_multiple_files_with_pipes(const std::map<std::string, std::string> &files, int sockfd);
 };
 
-class Sandbox
-{
-private:
-	std::string temp_dir;
-	int time_limit_sec;
-	int memory_limit_mb;
-
-public:
-	Sandbox(const std::string &temp_dir_in);
-	~Sandbox();
-
-	void cleanup();
-	bool create_temp_environment();
-	bool is_dangerous_code(const std::string &code);
-	bool compile_code(const std::string &code, std::string &error);
-	ExecutionResult run_program(const std::string &input);
-	ExecutionResult execute(const std::string &code, const std::string &input = "",
-													int tlim = 5, int mlim = 256);
-};
-
 std::string escape_json_str(const std::string &in);
 
 #endif
